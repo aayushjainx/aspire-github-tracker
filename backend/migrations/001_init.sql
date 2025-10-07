@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS repository_seen (
 );
 
 -- Indexes for better query performance
-CREATE INDEX IF NOT EXISTS idx_releases_repo_id ON releases(repository_id);
-CREATE INDEX IF NOT EXISTS idx_releases_published_at ON releases(published_at DESC);
-CREATE INDEX IF NOT EXISTS idx_seen_status_release_id ON repository_seen(release_id);
-CREATE INDEX IF NOT EXISTS idx_repository_seen_user_repo ON repository_seen(user_id, repository_id, seen_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_repositories_updated_at ON repositories(updated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_releases_repo_published ON releases(repository_id, published_at DESC NULLS LAST);
+CREATE INDEX IF NOT EXISTS idx_seen_repo_user_time ON repository_seen(repository_id, user_id, seen_at DESC);

@@ -1,89 +1,125 @@
 # GitHub Release Tracker
 
-A full-stack application for tracking GitHub repository releases with a GraphQL API backend and React TypeScript frontend.
+A full-stack application for tracking GitHub repository releases with a modern GraphQL API backend and React TypeScript frontend.
 
 ## 🎯 Overview
 
 This application allows users to:
 
-- Track multiple GitHub repositories
-- View the latest release information (version, release date)
-- Mark releases as "seen" to track which updates have been reviewed
-- Visual indicators for repositories with unseen updates
-- Manually refresh repository data
+- 📦 Track multiple GitHub repositories
+- 🔔 View the latest release information (version, release date, release notes)
+- ✅ Mark releases as "seen" to track which updates have been reviewed
+- 🎨 Visual indicators for repositories with unseen updates
+- 🔄 Manually refresh repository data from GitHub
+- 👥 Multi-user support with isolated "seen" status per user
 
 ## 📋 Features
 
 ### Backend (GraphQL API)
 
-- ✅ Track multiple GitHub repositories
-- ✅ Fetch latest releases from GitHub API
-- ✅ Multi-user support with per-user "seen" status
-- ✅ PostgreSQL database for persistence
-- ✅ Apollo Server with TypeScript
+- ✅ **ESM Architecture** - Modern ES2023 modules with native imports
+- ✅ **MVC Pattern** - Clean separation: Resolvers → Controllers → Models → Database
+- ✅ **Functional Programming** - Pure functions with namespace imports
+- ✅ **Type Safety** - Full TypeScript with strict mode
+- ✅ **Modular Schema** - Organized GraphQL schema (base, query, mutation types)
+- ✅ **Multi-user Support** - Per-user "seen" status tracking
+- ✅ **PostgreSQL** - Relational database with optimized indexes
+- ✅ **GitHub Integration** - Native ESM Octokit client (no hacks!)
 
 ### Frontend (React + TypeScript)
 
 - ✅ Intuitive and responsive UI
-- ✅ Add repositories by URL
-- ✅ View latest release information
-- ✅ Mark releases as seen
-- ✅ Visual indicators for unseen updates
-- ✅ Client-side caching with Apollo Client
+- ✅ Add repositories by GitHub URL
+- ✅ View latest release information with release notes
+- ✅ Mark releases as seen with single click
+- ✅ Visual indicators for unseen updates (blue badges)
+- ✅ Apollo Client with cache-and-network policy
 - ✅ Minimalistic, GitHub-inspired design
+- ✅ Environment-based configuration (Vite)
 
 ## 🛠️ Tech Stack
 
 ### Backend
 
-- Node.js + TypeScript
-- Apollo Server (GraphQL)
-- PostgreSQL
-- Octokit (GitHub API client)
+- **Runtime:** Node.js v22+ with TypeScript 5.9
+- **Module System:** ESM (ES2023)
+- **GraphQL:** Apollo Server 3.13
+- **Database:** PostgreSQL with pg driver
+- **GitHub API:** Octokit 22.0 (native ESM)
+- **Dev Tools:** tsx (ESM-compatible TypeScript execution)
+- **Architecture:** MVC with functional programming
 
 ### Frontend
 
-- React 18
-- TypeScript
-- Vite
-- Apollo Client
-- CSS3 (no framework)
+- **Framework:** React 18.2
+- **Language:** TypeScript 5.2
+- **Build Tool:** Vite 7.1
+- **GraphQL Client:** Apollo Client 4.0
+- **Styling:** Pure CSS3 (no framework)
+- **Linting:** ESLint with ES2023 support
 
 ## 📦 Project Structure
 
 ```
+Aspire assignment/
 ├── backend/
 │   ├── src/
-│   │   ├── index.ts           # Server entry point
-│   │   ├── schema.ts          # GraphQL schema
-│   │   ├── resolvers.ts       # GraphQL resolvers
-│   │   ├── context.ts         # GraphQL context
+│   │   ├── index.ts                    # Apollo Server entry point
+│   │   ├── context.ts                  # GraphQL context builder
+│   │   │
+│   │   ├── schema/
+│   │   │   ├── index.ts               # Schema aggregator
+│   │   │   ├── typeDefs/
+│   │   │   │   ├── base.ts            # Core types (Repository, Release, etc.)
+│   │   │   │   ├── query.ts           # Query type definitions
+│   │   │   │   └── mutation.ts        # Mutation type definitions
+│   │   │   └── resolvers/
+│   │   │       └── resolvers.ts       # GraphQL resolvers (thin layer)
+│   │   │
+│   │   ├── controllers/
+│   │   │   ├── index.ts               # Controller exports
+│   │   │   ├── RepositoryController.ts # Repository business logic
+│   │   │   └── ReleaseController.ts    # Release business logic
+│   │   │
+│   │   ├── models/
+│   │   │   ├── index.ts               # Model exports
+│   │   │   ├── RepositoryModel.ts     # Repository database operations
+│   │   │   ├── ReleaseModel.ts        # Release database operations
+│   │   │   └── SeenStatusModel.ts     # Seen status database operations
+│   │   │
 │   │   ├── db/
-│   │   │   └── client.ts      # PostgreSQL client
+│   │   │   └── client.ts              # PostgreSQL client & transactions
+│   │   │
 │   │   ├── github/
-│   │   │   └── client.ts      # GitHub API client
+│   │   │   └── client.ts              # Octokit singleton (native ESM)
+│   │   │
 │   │   ├── utils/
-│   │   │   └── parseRepoUrl.ts
+│   │   │   └── parseRepoUrl.ts        # GitHub URL parser
+│   │   │
 │   │   └── scripts/
-│   │       └── migrate.ts     # Database migrations
+│   │       └── migrate.ts             # Database migration runner
+│   │
 │   ├── migrations/
-│   │   ├── 001_init.sql
-│   │   └── 002_repository_seen_user.sql
-│   └── package.json
+│   │   └── 001_init.sql               # Unified database schema
+│   │
+│   ├── package.json                   # ESM configuration
+│   └── tsconfig.json                  # TypeScript ES2023 config
 │
 └── frontend/
     ├── src/
     │   ├── components/
-    │   │   ├── AddRepository.tsx
-    │   │   ├── RepositoryCard.tsx
-    │   │   └── RepositoryList.tsx
+    │   │   ├── AddRepository.tsx      # Repository input form
+    │   │   ├── RepositoryCard.tsx     # Individual repo card
+    │   │   └── RepositoryList.tsx     # Repository grid
     │   ├── graphql/
-    │   │   ├── queries.ts
-    │   │   └── mutations.ts
-    │   ├── apolloClient.ts
-    │   ├── types.ts
-    │   ├── App.tsx
-    │   └── main.tsx
+    │   │   ├── queries.ts             # GraphQL queries
+    │   │   └── mutations.ts           # GraphQL mutations
+    │   ├── apolloClient.ts            # Apollo Client setup
+    │   ├── types.ts                   # TypeScript types
+    │   ├── App.tsx                    # Main app component
+    │   └── main.tsx                   # React entry point
+    │
+    ├── eslint.config.js               # ESLint ES2023 config
     └── package.json
 ```
 
@@ -91,19 +127,19 @@ This application allows users to:
 
 ### Prerequisites
 
-- Node.js (v18 or higher recommended)
-- PostgreSQL (v12 or higher)
-- GitHub Personal Access Token (optional, for higher rate limits)
+- **Node.js:** v22+ (via nvm recommended)
+- **PostgreSQL:** v12 or higher
+- **GitHub Personal Access Token:** Optional, but recommended for higher rate limits (5000 requests/hour vs 60)
 
 ### 1. Database Setup
 
 ```bash
 # Create a PostgreSQL database
-createdb aspire_tracker
+createdb aspire
 
 # Or use psql
 psql -U postgres
-CREATE DATABASE aspire_tracker;
+CREATE DATABASE aspire;
 \q
 ```
 
@@ -112,7 +148,7 @@ CREATE DATABASE aspire_tracker;
 ```bash
 cd backend
 
-# Install dependencies
+# Install dependencies (includes tsx for ESM support)
 npm install
 
 # Create .env file
@@ -120,17 +156,24 @@ cp .env.example .env
 
 # Edit .env with your configuration:
 # PORT=4000
-# DATABASE_URL=postgresql://user:password@localhost:5432/aspire_tracker
-# GITHUB_TOKEN=your_github_token_here (optional)
+# DATABASE_URL=postgresql://user:password@localhost:5432/aspire
+# GITHUB_TOKEN=your_github_token_here (optional but recommended)
 
-# Run migrations
+# Run migrations (creates tables with optimized indexes)
 npm run migrate
 
-# Start the backend server
+# Start the backend server (uses tsx with hot reload)
 npm run dev
 ```
 
 The GraphQL API will be available at `http://localhost:4000`
+
+**Backend runs with:**
+
+- ✅ ESM modules (native `import`/`export`)
+- ✅ TypeScript ES2023 compilation
+- ✅ Auto-reload on file changes
+- ✅ Native Octokit import (no dynamic import hacks)
 
 ### 3. Frontend Setup
 
@@ -140,10 +183,10 @@ cd frontend
 # Install dependencies
 npm install
 
-# Create .env file
+# Create .env file (or use defaults)
 cp .env.example .env
 
-# Edit .env (default values should work):
+# Edit .env if needed (default values work):
 # VITE_GRAPHQL_URL=http://localhost:4000
 # VITE_USER_ID=user-1
 
@@ -152,6 +195,13 @@ npm run dev
 ```
 
 The frontend will be available at `http://localhost:5173` (or the port shown in terminal)
+
+**Frontend features:**
+
+- ⚡ Vite for instant hot module replacement
+- 🎨 Pure CSS with GitHub-inspired design
+- 🔄 Apollo Client with optimistic updates
+- 📱 Responsive design
 
 ## 📖 API Documentation
 
@@ -229,6 +279,23 @@ The application features a clean, minimalistic design inspired by GitHub's UI:
 - **Visual Indicators**: Blue "New Release" badges for unseen updates
 - **Responsive**: Works on desktop and mobile devices
 
+## 🏗️ Architecture Highlights
+
+### Backend MVC Pattern
+
+```
+Request Flow:
+GraphQL Query/Mutation
+  ↓
+Resolvers (schema/resolvers/resolvers.ts)
+  ↓
+Controllers (controllers/*.ts) - Business logic
+  ↓
+Models (models/*.ts) - Database operations
+  ↓
+PostgreSQL Database
+```
+
 ## 🔧 Development
 
 ### Backend Development
@@ -236,25 +303,28 @@ The application features a clean, minimalistic design inspired by GitHub's UI:
 ```bash
 cd backend
 
-# Development mode with auto-reload
+# Development mode with auto-reload (tsx)
 npm run dev
 
-# Build
-npm run build
+# Run database migrations
+npm run migrate
 
-# Start production server
-npm start
-
-# Type checking
+# Type checking only
 npm run typecheck
 ```
+
+**Available Scripts:**
+
+- `npm run dev` - Start with tsx (ESM-compatible hot reload)
+- `npm run migrate` - Run SQL migrations with tsx
+- `npm run typecheck` - TypeScript compilation check
 
 ### Frontend Development
 
 ```bash
 cd frontend
 
-# Development mode
+# Development mode (Vite HMR)
 npm run dev
 
 # Build for production
@@ -263,7 +333,7 @@ npm run build
 # Preview production build
 npm run preview
 
-# Lint
+# Lint with ESLint
 npm run lint
 ```
 
@@ -273,7 +343,7 @@ npm run lint
 
 ```
 PORT=4000
-DATABASE_URL=postgresql://user:password@localhost:5432/aspire_tracker
+DATABASE_URL=postgresql://user:password@localhost:5432/aspire
 GITHUB_TOKEN=your_github_token_here
 PGSSLMODE=prefer
 ```
@@ -300,20 +370,30 @@ The application supports multiple users through the `x-user-id` header:
 - Users are identified by a simple user ID (can be extended to proper authentication)
 - The frontend sends the user ID automatically with all requests
 
-## 📚 Notes
+### Multi-User Design
 
-- Data persists in PostgreSQL across sessions
-- Apollo Client provides automatic caching for better performance
-- The application uses the GitHub REST API through Octokit
-- No GitHub authentication is required (but recommended for higher rate limits)
+- User identification via `x-user-id` header
+- Each user has isolated "seen" status
+- Can be extended to JWT/OAuth authentication
+- Database designed with `user_id` column for multi-tenancy
+
+### GitHub API Integration
+
+- Uses Octokit REST API v22 (latest)
+- Singleton pattern for client reuse
+- Respects GitHub rate limits (60/hour unauthenticated, 5000/hour with token)
+- Handles repositories with no releases gracefully
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Follow the existing code structure (MVC, functional programming)
+4. Ensure TypeScript types are strict
+5. Test both frontend and backend
+6. Commit your changes (`git commit -m 'Add amazing feature'`)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Create a Pull Request
 
 ## 📄 License
 
@@ -321,6 +401,9 @@ This project is created for the Aspire Engineering coding assignment.
 
 ## 🎉 Acknowledgments
 
-- Built with React, TypeScript, GraphQL, and PostgreSQL
-- GitHub API for release information
-- Apollo for GraphQL infrastructure
+- **Built with:** React, TypeScript, Node.js, GraphQL, PostgreSQL
+- **Powered by:** Apollo Server/Client, Octokit, Vite
+
+---
+
+**📧 Questions?** Feel free to reach out or open an issue!
