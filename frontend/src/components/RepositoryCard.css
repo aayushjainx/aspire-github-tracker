@@ -1,0 +1,159 @@
+.repository-card {
+	background: white;
+	border: 1px solid #e1e4e8;
+	border-radius: 8px;
+	padding: 1.25rem;
+	transition: all 0.2s;
+}
+
+.repository-card:hover {
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.repository-card.unseen {
+	border-left: 4px solid #0366d6;
+	background-color: #f6f8fa;
+}
+
+.repo-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	margin-bottom: 0.75rem;
+}
+
+.repo-info {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	flex-wrap: wrap;
+}
+
+.repo-name {
+	margin: 0;
+	font-size: 1.1rem;
+	font-weight: 600;
+	color: #24292e;
+}
+
+.repo-name a {
+	color: #0366d6;
+	text-decoration: none;
+}
+
+.repo-name a:hover {
+	text-decoration: underline;
+}
+
+.unseen-badge {
+	background-color: #0366d6;
+	color: white;
+	font-size: 0.75rem;
+	padding: 0.25rem 0.5rem;
+	border-radius: 12px;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.refresh-button {
+	background: transparent;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 0.25rem 0.5rem;
+	font-size: 1.2rem;
+	cursor: pointer;
+	transition: all 0.2s;
+	color: #586069;
+}
+
+.refresh-button:hover:not(:disabled) {
+	background-color: #f6f8fa;
+	border-color: #0366d6;
+	color: #0366d6;
+}
+
+.refresh-button:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.repo-description {
+	color: #586069;
+	font-size: 0.9rem;
+	margin: 0 0 1rem 0;
+	line-height: 1.5;
+}
+
+.release-info {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 0.75rem;
+	border-top: 1px solid #e1e4e8;
+	gap: 1rem;
+}
+
+.release-details {
+	flex: 1;
+}
+
+.release-version {
+	font-size: 0.95rem;
+	margin-bottom: 0.25rem;
+	color: #24292e;
+}
+
+.release-link {
+	color: #0366d6;
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.release-link:hover {
+	text-decoration: underline;
+}
+
+.release-date {
+	font-size: 0.85rem;
+	color: #586069;
+}
+
+.mark-seen-button {
+	padding: 0.5rem 1rem;
+	background-color: #28a745;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	font-size: 0.85rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	white-space: nowrap;
+}
+
+.mark-seen-button:hover:not(:disabled) {
+	background-color: #22863a;
+}
+
+.mark-seen-button:disabled {
+	background-color: #94d3a2;
+	cursor: not-allowed;
+}
+
+.no-release {
+	color: #586069;
+	font-size: 0.9rem;
+	font-style: italic;
+	padding-top: 0.75rem;
+	border-top: 1px solid #e1e4e8;
+}
